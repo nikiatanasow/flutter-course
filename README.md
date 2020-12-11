@@ -10,4 +10,19 @@ Tracking progress of the flutter course
 - [ ] Theme 5 - Flutter Animations
 
 
-## Homeworks - TODO
+## Homeworks
+
+#### Theme 1
+
+- Setup your development environment - [Flutter docs](https://flutter.dev/docs/get-started/install)
+  - install flutter
+  - install android studion and setup a emulator
+  - [MAC ONLY] install xccode and setup a simulator
+  - install your IDE of choicec - [VSCode](https://code.visualstudio.com/), [Android studio](https://developer.android.com/studio), [IntelliJ](https://www.jetbrains.com/idea/)
+- Create and run your first flutter app
+- Change the text of the default label - `You have pushed the button this many times:` - to be `Click count`
+- *Add one more label below the counter label that is showing the clicked count multiplied by 10 (e.g. if you clicked the button 2 times the new label should show 20)
+
+#### Theme 2
+#### Theme 3
+#### Theme 4
