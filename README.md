@@ -1,14 +1,19 @@
 # flutter-course
 Tracking progress of the flutter course
 
-## Cource Agenda
+## Course Agenda
 
-- [x] Theme 1 - Getting started: What is Flutter,  Create first Flutter app,  Material and Cupertino Widgets,  Layout Widgets
-- [ ] Theme 2 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
-- [ ] Theme 3 - How to write platform specific code if you need it
-- [ ] Theme 4 - State management - BloC and Provider
-- [ ] Theme 5 - Flutter Animations
+- [x] Theme 1 - Getting started: What is Flutter,  Create first Flutter app,  Material and Cupertino Widgets
+- [ ] Theme 2 - Layout Widgets, Testing framework, Build a simple ToDo application with Flutt<3r
+- [ ] Theme 3 - Build simple ToDo application: **Part 2**
+- [ ] Theme 4 - Rewrite the ToDo business logic with BloC (or Provider)
+- [ ] Theme 5 - Animations - implicit and explicit. Add animations into the ToDo application
+- [ ] Theme 6 - How to write platform specific code in Android and Objective-c. When it is needed?
+- [ ] Theme 7 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
+- [ ] Theme 8 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
 
+## ToDo Application Design
+![ToDo](https://bloclibrary.dev/assets/gifs/flutter_todos.gif)
 
 ## Homeworks
 
