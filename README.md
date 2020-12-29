@@ -29,5 +29,8 @@ Tracking progress of the flutter course
 - *Add one more label below the counter label that is showing the clicked count multiplied by 10 (e.g. if you clicked the button 2 times the new label should show 20)
 
 #### Theme 2
+- Create a flutter application
+- Modify the application - preserve the idea of a Counter app and simply use a different layout. It is all up to you - you can also use different widgets (not only Text).
+- Write 2-3 Widget tests for your Counter app. If you are intereseted you can try to write some integration tests (driver) as well.
 #### Theme 3
 #### Theme 4
