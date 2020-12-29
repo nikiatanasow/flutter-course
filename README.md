@@ -4,7 +4,7 @@ Tracking progress of the flutter course
 ## Course Agenda
 
 - [x] Theme 1 - Getting started: What is Flutter,  Create first Flutter app,  Material and Cupertino Widgets
-- [ ] Theme 2 - Layout Widgets, Testing framework, Build a simple ToDo application with Flutt<3r
+- [ ] [Theme 2 - Layout Widgets, Testing framework, Build a simple ToDo application with Flutt<3r!](https://drive.google.com/drive/u/0/folders/1ScL31DWJLLmY_3GYzi9rLDx2SAZH7j2P)
 - [ ] Theme 3 - Build simple ToDo application: **Part 2**
 - [ ] Theme 4 - Rewrite the ToDo business logic with BloC (or Provider)
 - [ ] Theme 5 - Animations - implicit and explicit. Add animations into the ToDo application
