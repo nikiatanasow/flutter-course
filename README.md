@@ -5,7 +5,7 @@ Tracking progress of the flutter course
 
 - [x] Theme 1 - Getting started: What is Flutter,  Create first Flutter app,  Material and Cupertino Widgets
 - [x] [Theme 2 - Layout Widgets, Testing framework](https://drive.google.com/file/d/1XgJwNkbfGM3qir8mxYRNvOA2Zuc_GRMQ/view?usp=sharing)
-- [x] Theme 3 - Build simple ToDo application: **Part 1**
+- [x] [Theme 3 - Build simple ToDo application: **Part 1**](https://drive.google.com/file/d/1QbnhDAxxGRh_gvp-K-M7LEfe-o51yjVC/view?usp=sharing)
 - [ ] Theme 4 - Build simple ToDo application: **Part 2**
 - [ ] Theme 5 - Rewrite the ToDo business logic with BloC (or Provider)
 - [ ] Theme 6 - Animations - implicit and explicit. Add animations into the ToDo application
@@ -34,4 +34,5 @@ Tracking progress of the flutter course
 - Modify the application - preserve the idea of a Counter app and simply use a different layout. It is all up to you - you can also use different widgets (not only Text).
 - Write 2-3 Widget tests for your Counter app. If you are intereseted you can try to write some integration tests (driver) as well.
 #### Theme 3
+Try to recrate the ToDo application from the session.
 #### Theme 4
