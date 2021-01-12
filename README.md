@@ -6,12 +6,13 @@ Tracking progress of the flutter course
 - [x] Theme 1 - Getting started: What is Flutter,  Create first Flutter app,  Material and Cupertino Widgets
 - [x] [Theme 2 - Layout Widgets, Testing framework](https://drive.google.com/file/d/1XgJwNkbfGM3qir8mxYRNvOA2Zuc_GRMQ/view?usp=sharing)
 - [x] [Theme 3 - Build simple ToDo application: **Part 1**](https://drive.google.com/file/d/1QbnhDAxxGRh_gvp-K-M7LEfe-o51yjVC/view?usp=sharing)
-- [ ] Theme 4 - Build simple ToDo application: **Part 2**
-- [ ] Theme 5 - Rewrite the ToDo business logic with BloC (or Provider)
-- [ ] Theme 6 - Animations - implicit and explicit. Add animations into the ToDo application
-- [ ] Theme 7 - How to write platform specific code in Android and Objective-c. When it is needed?
-- [ ] Theme 8 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
-- [ ] Theme 9 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
+- [x] [Theme 4 - Build simple ToDo application: **Part 2**](https://drive.google.com/file/d/1F_hCl19Eokwx5TkqWLp7g_ujdTCUZtBi/view?usp=sharing)
+- [ ] Theme 5 - Build simple ToDo application: **Part 3**
+- [ ] Theme 6 - Rewrite the ToDo business logic with BloC (or Provider)
+- [ ] Theme 7 - Animations - implicit and explicit. Add animations into the ToDo application
+- [ ] Theme 8 - How to write platform specific code in Android and Objective-c. When it is needed?
+- [ ] Theme 9 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
+- [ ] Theme 10 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
 
 ## ToDo Application Design
 ![ToDo](https://bloclibrary.dev/assets/gifs/flutter_todos.gif)
@@ -36,3 +37,4 @@ Tracking progress of the flutter course
 #### Theme 3
 Try to recrate the ToDo application from the session.
 #### Theme 4
+Try to recrate the ToDo application from the session or improve it.
