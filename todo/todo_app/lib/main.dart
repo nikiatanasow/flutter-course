@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/edited_item.dart';
 import 'package:todo_app/models/todo_item.dart';
 import 'package:todo_app/screens/add_edit_screen.dart';
+import 'package:todo_app/screens/details_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,18 +46,70 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: _todoItems.length,
         itemBuilder: (context, index) {
           final TodoItem todoItem = _todoItems[index];
-          return ListTile(
-            title: Text(todoItem.title),
-            subtitle: Text(todoItem.details),
-            leading: Checkbox(
-              onChanged: (value) {
-                final changedTodoItem = todoItem.copy(isCompleted: value);
-                _todoItems.removeAt(index);
-                _todoItems.insert(index, changedTodoItem);
-                setState(() {});
-              },
-              value: todoItem.isCompleted ?? false,
-            ),
+          return Stack(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  final result = await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DetailsScreen(
+                        item: todoItem,
+                      ),
+                    ),
+                  ) as EditedItem;
+
+                  if (result != null) {
+                    switch (result.operation) {
+                      case ItemOperation.Delete:
+                        _todoItems.remove(result.item);
+                        setState(() {});
+                        break;
+                      case ItemOperation.Edit:
+                        _todoItems.removeAt(index);
+                        _todoItems.insert(index, result.item);
+                        setState(() {});
+                        break;
+                    }
+                  }
+                },
+                child: Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    final realIndex = _todoItems.indexOf(todoItem);
+                    _todoItems.removeAt(realIndex);
+
+                    final snackBar = SnackBar(
+                      content: Text(
+                        'Item ${todoItem.title} has been deleted!',
+                      ),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          _todoItems.insert(index, todoItem);
+                          setState(() {});
+                        },
+                      ),
+                    );
+
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  },
+                  child: ListTile(
+                    title: Text(todoItem.title),
+                    subtitle: Text(todoItem.details),
+                    leading: Checkbox(
+                      onChanged: (value) {
+                        final changedTodoItem =
+                            todoItem.copy(isCompleted: value);
+                        _todoItems.removeAt(index);
+                        _todoItems.insert(index, changedTodoItem);
+                        setState(() {});
+                      },
+                      value: todoItem.isCompleted ?? false,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),

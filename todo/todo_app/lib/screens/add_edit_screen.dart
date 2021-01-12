@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/todo_item.dart';
 
 class AddEditScreen extends StatefulWidget {
+  final TodoItem item;
+
+  const AddEditScreen({Key key, this.item}) : super(key: key);
+
   @override
   _AddEditScreenState createState() => _AddEditScreenState();
 }
@@ -13,8 +17,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
   @override
   void initState() {
     super.initState();
-    _titleContoller = TextEditingController();
-    _detailsController = TextEditingController();
+
+    _titleContoller = TextEditingController(text: widget.item?.title);
+    _detailsController = TextEditingController(text: widget.item?.details);
   }
 
   @override
@@ -28,11 +33,11 @@ class _AddEditScreenState extends State<AddEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Todo'),
+        title: Text(widget.item == null ? 'Add Todo' : 'Edit Todo'),
         actions: [
           IconButton(
             icon: Icon(
-              Icons.save,
+              widget.item == null ? Icons.save : Icons.check,
               color: Colors.white,
             ),
             onPressed: () {
@@ -42,6 +47,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
               final todoItem = TodoItem(
                 title: title,
                 details: details,
+                isCompleted: widget.item?.isCompleted,
               );
 
               Navigator.of(context).pop(todoItem);
