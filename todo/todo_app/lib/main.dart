@@ -29,6 +29,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<TodoItem> _todoItems;
+  List<TodoItem> _filteredItems;
+  GlobalKey _filterBtnKey = GlobalKey();
 
   @override
   void initState() {
@@ -41,11 +43,100 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            key: _filterBtnKey,
+            icon: Icon(Icons.filter_alt),
+            onPressed: () {
+              final filterBtnRenderObj =
+                  _filterBtnKey.currentContext.findRenderObject() as RenderBox;
+              Offset position = filterBtnRenderObj.localToGlobal(Offset.zero);
+              Size filterBtnSize = filterBtnRenderObj.size;
+              showMenu(
+                context: context,
+                position: RelativeRect.fromLTRB(
+                  position.dx - filterBtnSize.width,
+                  position.dy,
+                  position.dx,
+                  position.dy + filterBtnSize.height,
+                ),
+                items: <PopupMenuEntry>[
+                  PopupMenuItem(
+                    child: FlatButton(
+                      child: Text('Show all'),
+                      onPressed: () {
+                        _filteredItems = null;
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: FlatButton(
+                      child: Text('Show active'),
+                      onPressed: () {
+                        _filteredItems = _todoItems
+                            .where((element) =>
+                                element.isCompleted == false ||
+                                element.isCompleted == null)
+                            .toList();
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: FlatButton(
+                      child: Text('Show completed'),
+                      onPressed: () {
+                        _filteredItems = _todoItems
+                            .where((element) => element.isCompleted == true)
+                            .toList();
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+          PopupMenuButton(
+            child: Icon(Icons.more_horiz),
+            onSelected: (value) {},
+            itemBuilder: (context) {
+              return <PopupMenuEntry>[
+                PopupMenuItem(
+                  child: FlatButton(
+                    child: Text('Mark all completed'),
+                    onPressed: () {
+                      _todoItems = _todoItems
+                          .map((e) => e.copy(isCompleted: true))
+                          .toList();
+                      setState(() {});
+                    },
+                  ),
+                ),
+                PopupMenuItem(
+                  child: FlatButton(
+                    child: Text('Mark all active'),
+                    onPressed: () {
+                      _todoItems = _todoItems
+                          .map((e) => e.copy(isCompleted: false))
+                          .toList();
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ];
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
-        itemCount: _todoItems.length,
+        itemCount:
+            _filteredItems != null ? _filteredItems.length : _todoItems.length,
         itemBuilder: (context, index) {
-          final TodoItem todoItem = _todoItems[index];
+          final TodoItem todoItem = _filteredItems != null
+              ? _filteredItems[index]
+              : _todoItems[index];
           return Stack(
             children: [
               GestureDetector(
@@ -62,11 +153,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     switch (result.operation) {
                       case ItemOperation.Delete:
                         _todoItems.remove(result.item);
+                        _filteredItems?.remove(result.item);
                         setState(() {});
                         break;
                       case ItemOperation.Edit:
-                        _todoItems.removeAt(index);
-                        _todoItems.insert(index, result.item);
+                        final realIndex = _todoItems.indexOf(todoItem);
+                        _todoItems.removeAt(realIndex);
+                        _todoItems.insert(realIndex, result.item);
+
+                        _filteredItems?.removeAt(index);
+                        _filteredItems?.insert(index, result.item);
+
                         setState(() {});
                         break;
                     }
@@ -77,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onDismissed: (direction) {
                     final realIndex = _todoItems.indexOf(todoItem);
                     _todoItems.removeAt(realIndex);
+                    _filteredItems?.removeAt(index);
 
                     final snackBar = SnackBar(
                       content: Text(
@@ -86,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: 'Undo',
                         onPressed: () {
                           _todoItems.insert(index, todoItem);
+                          _filteredItems?.insert(index, todoItem);
                           setState(() {});
                         },
                       ),
@@ -102,6 +201,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             todoItem.copy(isCompleted: value);
                         _todoItems.removeAt(index);
                         _todoItems.insert(index, changedTodoItem);
+                        _filteredItems?.removeAt(index);
+                        _filteredItems?.insert(index, changedTodoItem);
                         setState(() {});
                       },
                       value: todoItem.isCompleted ?? false,
@@ -127,6 +228,22 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
         child: Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.list,
+            ),
+            label: 'Todos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.data_usage,
+            ),
+            label: 'Stats',
+          ),
+        ],
       ),
     );
   }
