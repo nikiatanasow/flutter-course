@@ -7,7 +7,7 @@ Tracking progress of the flutter course
 - [x] [Theme 2 - Layout Widgets, Testing framework](https://drive.google.com/file/d/1XgJwNkbfGM3qir8mxYRNvOA2Zuc_GRMQ/view?usp=sharing)
 - [x] [Theme 3 - Build simple ToDo application: **Part 1**](https://drive.google.com/file/d/1QbnhDAxxGRh_gvp-K-M7LEfe-o51yjVC/view?usp=sharing)
 - [x] [Theme 4 - Build simple ToDo application: **Part 2**](https://drive.google.com/file/d/1F_hCl19Eokwx5TkqWLp7g_ujdTCUZtBi/view?usp=sharing)
-- [ ] Theme 5 - Build simple ToDo application: **Part 3**
+- [x] [Theme 5 - Build simple ToDo application: **Part 3**](https://drive.google.com/file/d/1cTw7gAX927jCMVZ57m0MmQGWDJkel9JZ/view?usp=sharing)
 - [ ] Theme 6 - Rewrite the ToDo business logic with BloC (or Provider)
 - [ ] Theme 7 - Animations - implicit and explicit. Add animations into the ToDo application
 - [ ] Theme 8 - How to write platform specific code in Android and Objective-c. When it is needed?
@@ -38,3 +38,5 @@ Tracking progress of the flutter course
 Try to recrate the ToDo application from the session.
 #### Theme 4
 Try to recrate the ToDo application from the session or improve it.
+#### Theme 5
+Improve the logic of the two button that are part of the AppBar on the main page. Currently their logic is not working accurately. For example if you have a filtered applied and only completed items as visualied when you mark all them as active filtering should be applied as well.
