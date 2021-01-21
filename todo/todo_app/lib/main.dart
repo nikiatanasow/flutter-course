@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/edited_item.dart';
+import 'package:todo_app/models/filter_popup_item.dart';
+import 'package:todo_app/models/options_popup_item.dart';
 import 'package:todo_app/models/todo_item.dart';
 import 'package:todo_app/screens/add_edit_screen.dart';
 import 'package:todo_app/screens/details_screen.dart';
@@ -30,7 +32,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<TodoItem> _todoItems;
   List<TodoItem> _filteredItems;
-  GlobalKey _filterBtnKey = GlobalKey();
 
   @override
   void initState() {
@@ -44,86 +45,73 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
-          IconButton(
-            key: _filterBtnKey,
-            icon: Icon(Icons.filter_alt),
-            onPressed: () {
-              final filterBtnRenderObj =
-                  _filterBtnKey.currentContext.findRenderObject() as RenderBox;
-              Offset position = filterBtnRenderObj.localToGlobal(Offset.zero);
-              Size filterBtnSize = filterBtnRenderObj.size;
-              showMenu(
-                context: context,
-                position: RelativeRect.fromLTRB(
-                  position.dx - filterBtnSize.width,
-                  position.dy,
-                  position.dx,
-                  position.dy + filterBtnSize.height,
+          PopupMenuButton(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Icon(Icons.filter_list),
+            ),
+            onSelected: (type) {
+              switch (type) {
+                case FilterPopupItem.all:
+                  _filteredItems = null;
+                  break;
+                case FilterPopupItem.active:
+                  _filteredItems = _todoItems
+                      .where((element) =>
+                          element.isCompleted == false ||
+                          element.isCompleted == null)
+                      .toList();
+                  break;
+                case FilterPopupItem.completed:
+                  _filteredItems = _todoItems
+                      .where((element) => element.isCompleted == true)
+                      .toList();
+                  break;
+              }
+
+              setState(() {});
+            },
+            itemBuilder: (context) {
+              return <PopupMenuEntry>[
+                PopupMenuItem<FilterPopupItem>(
+                  value: FilterPopupItem.all,
+                  child: Text('Show all'),
                 ),
-                items: <PopupMenuEntry>[
-                  PopupMenuItem(
-                    child: FlatButton(
-                      child: Text('Show all'),
-                      onPressed: () {
-                        _filteredItems = null;
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                  PopupMenuItem(
-                    child: FlatButton(
-                      child: Text('Show active'),
-                      onPressed: () {
-                        _filteredItems = _todoItems
-                            .where((element) =>
-                                element.isCompleted == false ||
-                                element.isCompleted == null)
-                            .toList();
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                  PopupMenuItem(
-                    child: FlatButton(
-                      child: Text('Show completed'),
-                      onPressed: () {
-                        _filteredItems = _todoItems
-                            .where((element) => element.isCompleted == true)
-                            .toList();
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                ],
-              );
+                PopupMenuItem<FilterPopupItem>(
+                  value: FilterPopupItem.active,
+                  child: Text('Show active'),
+                ),
+                PopupMenuItem<FilterPopupItem>(
+                  value: FilterPopupItem.completed,
+                  child: Text('Show completed'),
+                ),
+              ];
             },
           ),
           PopupMenuButton(
-            child: Icon(Icons.more_horiz),
-            onSelected: (value) {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Icon(Icons.more_horiz),
+            ),
+            onSelected: (value) {
+              if (value == OptionsPopupItem.markAllActive) {
+                _todoItems =
+                    _todoItems.map((e) => e.copy(isCompleted: false)).toList();
+              } else {
+                _todoItems =
+                    _todoItems.map((e) => e.copy(isCompleted: true)).toList();
+              }
+              setState(() {});
+            },
             itemBuilder: (context) {
               return <PopupMenuEntry>[
-                PopupMenuItem(
-                  child: FlatButton(
-                    child: Text('Mark all completed'),
-                    onPressed: () {
-                      _todoItems = _todoItems
-                          .map((e) => e.copy(isCompleted: true))
-                          .toList();
-                      setState(() {});
-                    },
-                  ),
+                PopupMenuItem<OptionsPopupItem>(
+                  value: OptionsPopupItem.markAllActive,
+                  child: Text('Mark all active'),
                 ),
-                PopupMenuItem(
-                  child: FlatButton(
-                    child: Text('Mark all active'),
-                    onPressed: () {
-                      _todoItems = _todoItems
-                          .map((e) => e.copy(isCompleted: false))
-                          .toList();
-                      setState(() {});
-                    },
-                  ),
+                PopupMenuItem<OptionsPopupItem>(
+                  value: OptionsPopupItem.markAllCompleted,
+                  child: Text('Mark all completed'),
                 ),
               ];
             },

@@ -1,0 +1,4 @@
+enum OptionsPopupItem {
+  markAllActive,
+  markAllCompleted,
+}
