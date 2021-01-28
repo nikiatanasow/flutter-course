@@ -8,7 +8,7 @@ Tracking progress of the flutter course
 - [x] [Theme 3 - Build simple ToDo application: **Part 1**](https://drive.google.com/file/d/1QbnhDAxxGRh_gvp-K-M7LEfe-o51yjVC/view?usp=sharing)
 - [x] [Theme 4 - Build simple ToDo application: **Part 2**](https://drive.google.com/file/d/1F_hCl19Eokwx5TkqWLp7g_ujdTCUZtBi/view?usp=sharing)
 - [x] [Theme 5 - Build simple ToDo application: **Part 3**](https://drive.google.com/file/d/1cTw7gAX927jCMVZ57m0MmQGWDJkel9JZ/view?usp=sharing)
-- [ ] Theme 6 - Rewrite the ToDo business logic with BloC: **Part 1**
+- [x] [Theme 6 - Rewrite the ToDo business logic with BloC: **Part 1**](https://viskosoft-my.sharepoint.com/:v:/g/personal/admin_viskosoft_onmicrosoft_com/EVH_rftDouhHvAwfQEWlj1IBrNGNTr6DC5yk1Aw1FjJeOw?e=UaXjNw)
 - [ ] Theme 7 - Rewrite the ToDo business logic with BloC: **Part 2**
 - [ ] Theme 8 - Animations - implicit and explicit. Add animations into the ToDo application
 - [ ] Theme 9 - How to write platform specific code in Android and Objective-c. When it is needed?
@@ -41,3 +41,5 @@ Try to recrate the ToDo application from the session.
 Try to recrate the ToDo application from the session or improve it.
 #### Theme 5
 Improve the logic of the two buttons that are part of the AppBar on the main page. Currently their logic is not working accurately. For example if you have an applied filtering and only completed items are visualized when you mark all the thems as active filtering should be re-applied as well.
+#### Theme 6
+Create a counter app with BLoC on your own.
