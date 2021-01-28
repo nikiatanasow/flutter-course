@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<TodoItem> _todoItems;
   List<TodoItem> _filteredItems;
+  int _currentSelectedIndex = 0;
 
   @override
   void initState() {
@@ -119,90 +120,129 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount:
-            _filteredItems != null ? _filteredItems.length : _todoItems.length,
-        itemBuilder: (context, index) {
-          final TodoItem todoItem = _filteredItems != null
-              ? _filteredItems[index]
-              : _todoItems[index];
-          return Stack(
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  final result = await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DetailsScreen(
-                        item: todoItem,
+      body: _currentSelectedIndex == 0
+          ? ListView.builder(
+              itemCount: _filteredItems != null
+                  ? _filteredItems.length
+                  : _todoItems.length,
+              itemBuilder: (context, index) {
+                final TodoItem todoItem = _filteredItems != null
+                    ? _filteredItems[index]
+                    : _todoItems[index];
+                return Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        final result = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DetailsScreen(
+                              item: todoItem,
+                            ),
+                          ),
+                        ) as EditedItem;
+
+                        if (result != null) {
+                          switch (result.operation) {
+                            case ItemOperation.Delete:
+                              _todoItems.remove(result.item);
+                              _filteredItems?.remove(result.item);
+                              setState(() {});
+                              break;
+                            case ItemOperation.Edit:
+                              final realIndex = _todoItems.indexOf(todoItem);
+                              _todoItems.removeAt(realIndex);
+                              _todoItems.insert(realIndex, result.item);
+
+                              _filteredItems?.removeAt(index);
+                              _filteredItems?.insert(index, result.item);
+
+                              setState(() {});
+                              break;
+                          }
+                        }
+                      },
+                      child: Dismissible(
+                        key: UniqueKey(),
+                        onDismissed: (direction) {
+                          final realIndex = _todoItems.indexOf(todoItem);
+                          _todoItems.removeAt(realIndex);
+                          _filteredItems?.removeAt(index);
+
+                          final snackBar = SnackBar(
+                            content: Text(
+                              'Item ${todoItem.title} has been deleted!',
+                            ),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {
+                                _todoItems.insert(index, todoItem);
+                                _filteredItems?.insert(index, todoItem);
+                                setState(() {});
+                              },
+                            ),
+                          );
+
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        },
+                        child: ListTile(
+                          title: Text(todoItem.title),
+                          subtitle: Text(todoItem.details),
+                          leading: Checkbox(
+                            onChanged: (value) {
+                              final changedTodoItem =
+                                  todoItem.copy(isCompleted: value);
+                              _todoItems.removeAt(index);
+                              _todoItems.insert(index, changedTodoItem);
+                              _filteredItems?.removeAt(index);
+                              _filteredItems?.insert(index, changedTodoItem);
+                              setState(() {});
+                            },
+                            value: todoItem.isCompleted ?? false,
+                          ),
+                        ),
                       ),
                     ),
-                  ) as EditedItem;
-
-                  if (result != null) {
-                    switch (result.operation) {
-                      case ItemOperation.Delete:
-                        _todoItems.remove(result.item);
-                        _filteredItems?.remove(result.item);
-                        setState(() {});
-                        break;
-                      case ItemOperation.Edit:
-                        final realIndex = _todoItems.indexOf(todoItem);
-                        _todoItems.removeAt(realIndex);
-                        _todoItems.insert(realIndex, result.item);
-
-                        _filteredItems?.removeAt(index);
-                        _filteredItems?.insert(index, result.item);
-
-                        setState(() {});
-                        break;
-                    }
-                  }
-                },
-                child: Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) {
-                    final realIndex = _todoItems.indexOf(todoItem);
-                    _todoItems.removeAt(realIndex);
-                    _filteredItems?.removeAt(index);
-
-                    final snackBar = SnackBar(
-                      content: Text(
-                        'Item ${todoItem.title} has been deleted!',
-                      ),
-                      action: SnackBarAction(
-                        label: 'Undo',
-                        onPressed: () {
-                          _todoItems.insert(index, todoItem);
-                          _filteredItems?.insert(index, todoItem);
-                          setState(() {});
-                        },
-                      ),
-                    );
-
-                    Scaffold.of(context).showSnackBar(snackBar);
-                  },
-                  child: ListTile(
-                    title: Text(todoItem.title),
-                    subtitle: Text(todoItem.details),
-                    leading: Checkbox(
-                      onChanged: (value) {
-                        final changedTodoItem =
-                            todoItem.copy(isCompleted: value);
-                        _todoItems.removeAt(index);
-                        _todoItems.insert(index, changedTodoItem);
-                        _filteredItems?.removeAt(index);
-                        _filteredItems?.insert(index, changedTodoItem);
-                        setState(() {});
-                      },
-                      value: todoItem.isCompleted ?? false,
+                  ],
+                );
+              },
+            )
+          : Container(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Completed',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                  Text(
+                    _todoItems
+                        .where((element) => element.isCompleted == true)
+                        .length
+                        .toString(),
+                  ),
+                  Text(
+                    'Active',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    _todoItems
+                        .where((element) =>
+                            element.isCompleted == false ||
+                            element.isCompleted == null)
+                        .length
+                        .toString(),
+                  ),
+                ],
               ),
-            ],
-          );
-        },
-      ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final TodoItem todoItem = await Navigator.of(context).push(
@@ -219,6 +259,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentSelectedIndex,
+        onTap: (index) {
+          _currentSelectedIndex = index;
+          setState(() {});
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(
