@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/bloc/todo_bloc.dart';
 import 'package:todo_app/models/todo_item.dart';
 
 class AddEditScreen extends StatefulWidget {
-  final TodoItem item;
-
-  const AddEditScreen({Key key, this.item}) : super(key: key);
-
   @override
   _AddEditScreenState createState() => _AddEditScreenState();
 }
@@ -18,8 +16,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
   void initState() {
     super.initState();
 
-    _titleContoller = TextEditingController(text: widget.item?.title);
-    _detailsController = TextEditingController(text: widget.item?.details);
+    // _titleContoller = TextEditingController(text: widget.item?.title);
+    // _detailsController = TextEditingController(text: widget.item?.details);
   }
 
   @override
@@ -31,49 +29,64 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.item == null ? 'Add Todo' : 'Edit Todo'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              widget.item == null ? Icons.save : Icons.check,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              final title = _titleContoller.text;
-              final details = _detailsController.text;
+    return BlocBuilder<TodoBloc, TodoBlocState>(
+      builder: (context, state) {
+        TodoItem item;
+        if (state is TodoItemEditState) {
+          item = state.item;
+        }
 
-              final todoItem = TodoItem(
-                title: title,
-                details: details,
-                isCompleted: widget.item?.isCompleted,
-              );
+        _titleContoller = TextEditingController(text: item?.title);
+        _detailsController = TextEditingController(text: item?.details);
 
-              Navigator.of(context).pop(todoItem);
-            },
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(item == null ? 'Add Todo' : 'Edit Todo'),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  item == null ? Icons.save : Icons.check,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  final title = _titleContoller.text;
+                  final details = _detailsController.text;
+
+                  final todoItem = TodoItem(
+                    title: title,
+                    details: details,
+                    isCompleted: item?.isCompleted,
+                  );
+
+                  BlocProvider.of<TodoBloc>(context)
+                      .add(AddTodoItemEvent(item: todoItem));
+
+                  Navigator.of(context).pop(todoItem);
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          TextField(
-            controller: _titleContoller,
-            decoration: const InputDecoration(
-              hintText: 'Title',
-            ),
+          body: Column(
+            children: [
+              TextField(
+                controller: _titleContoller,
+                decoration: const InputDecoration(
+                  hintText: 'Title',
+                ),
+              ),
+              TextField(
+                controller: _detailsController,
+                decoration: const InputDecoration(
+                  hintText: 'Details',
+                  alignLabelWithHint: true,
+                  hintMaxLines: 5,
+                ),
+                maxLines: 5,
+              ),
+            ],
           ),
-          TextField(
-            controller: _detailsController,
-            decoration: const InputDecoration(
-              hintText: 'Details',
-              alignLabelWithHint: true,
-              hintMaxLines: 5,
-            ),
-            maxLines: 5,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

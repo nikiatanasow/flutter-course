@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/edited_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/bloc/todo_bloc.dart';
+import 'package:todo_app/bloc/todo_repository.dart';
 import 'package:todo_app/models/filter_popup_item.dart';
 import 'package:todo_app/models/options_popup_item.dart';
-import 'package:todo_app/models/todo_item.dart';
 import 'package:todo_app/screens/add_edit_screen.dart';
-import 'package:todo_app/screens/details_screen.dart';
+import 'package:todo_app/widgets/stats.dart';
+import 'package:todo_app/widgets/todo_items_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,10 +15,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Todos',
-      home: MyHomePage(title: 'Flutter Todos'),
+    return BlocProvider(
+      create: (_) => TodoBloc(repository: TodoRepository()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Todos',
+        home: MyHomePage(
+          title: 'Flutter Todos',
+        ),
+      ),
     );
   }
 }
@@ -31,15 +38,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<TodoItem> _todoItems;
-  List<TodoItem> _filteredItems;
   int _currentSelectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _todoItems = List<TodoItem>();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,23 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
             onSelected: (type) {
               switch (type) {
                 case FilterPopupItem.all:
-                  _filteredItems = null;
+                  // call event filter all
                   break;
                 case FilterPopupItem.active:
-                  _filteredItems = _todoItems
-                      .where((element) =>
-                          element.isCompleted == false ||
-                          element.isCompleted == null)
-                      .toList();
+                  // call event filter active
                   break;
                 case FilterPopupItem.completed:
-                  _filteredItems = _todoItems
-                      .where((element) => element.isCompleted == true)
-                      .toList();
+                  // call event filter completed
                   break;
               }
-
-              setState(() {});
             },
             itemBuilder: (context) {
               return <PopupMenuEntry>[
@@ -96,14 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.more_horiz),
             ),
             onSelected: (value) {
-              if (value == OptionsPopupItem.markAllActive) {
-                _todoItems =
-                    _todoItems.map((e) => e.copy(isCompleted: false)).toList();
-              } else {
-                _todoItems =
-                    _todoItems.map((e) => e.copy(isCompleted: true)).toList();
-              }
-              setState(() {});
+              // call mark event
             },
             itemBuilder: (context) {
               return <PopupMenuEntry>[
@@ -120,141 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: _currentSelectedIndex == 0
-          ? ListView.builder(
-              itemCount: _filteredItems != null
-                  ? _filteredItems.length
-                  : _todoItems.length,
-              itemBuilder: (context, index) {
-                final TodoItem todoItem = _filteredItems != null
-                    ? _filteredItems[index]
-                    : _todoItems[index];
-                return Stack(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        final result = await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => DetailsScreen(
-                              item: todoItem,
-                            ),
-                          ),
-                        ) as EditedItem;
-
-                        if (result != null) {
-                          switch (result.operation) {
-                            case ItemOperation.Delete:
-                              _todoItems.remove(result.item);
-                              _filteredItems?.remove(result.item);
-                              setState(() {});
-                              break;
-                            case ItemOperation.Edit:
-                              final realIndex = _todoItems.indexOf(todoItem);
-                              _todoItems.removeAt(realIndex);
-                              _todoItems.insert(realIndex, result.item);
-
-                              _filteredItems?.removeAt(index);
-                              _filteredItems?.insert(index, result.item);
-
-                              setState(() {});
-                              break;
-                          }
-                        }
-                      },
-                      child: Dismissible(
-                        key: UniqueKey(),
-                        onDismissed: (direction) {
-                          final realIndex = _todoItems.indexOf(todoItem);
-                          _todoItems.removeAt(realIndex);
-                          _filteredItems?.removeAt(index);
-
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Item ${todoItem.title} has been deleted!',
-                            ),
-                            action: SnackBarAction(
-                              label: 'Undo',
-                              onPressed: () {
-                                _todoItems.insert(index, todoItem);
-                                _filteredItems?.insert(index, todoItem);
-                                setState(() {});
-                              },
-                            ),
-                          );
-
-                          Scaffold.of(context).showSnackBar(snackBar);
-                        },
-                        child: ListTile(
-                          title: Text(todoItem.title),
-                          subtitle: Text(todoItem.details),
-                          leading: Checkbox(
-                            onChanged: (value) {
-                              final changedTodoItem =
-                                  todoItem.copy(isCompleted: value);
-                              _todoItems.removeAt(index);
-                              _todoItems.insert(index, changedTodoItem);
-                              _filteredItems?.removeAt(index);
-                              _filteredItems?.insert(index, changedTodoItem);
-                              setState(() {});
-                            },
-                            value: todoItem.isCompleted ?? false,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            )
-          : Container(
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Completed',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    _todoItems
-                        .where((element) => element.isCompleted == true)
-                        .length
-                        .toString(),
-                  ),
-                  Text(
-                    'Active',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    _todoItems
-                        .where((element) =>
-                            element.isCompleted == false ||
-                            element.isCompleted == null)
-                        .length
-                        .toString(),
-                  ),
-                ],
-              ),
-            ),
+      body: _currentSelectedIndex == 0 ? TodoItemsList() : Stats(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final TodoItem todoItem = await Navigator.of(context).push(
+          await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AddEditScreen(),
             ),
           );
-
-          if (todoItem != null) {
-            _todoItems.add(todoItem);
-            setState(() {});
-          }
         },
         child: Icon(Icons.add),
       ),
