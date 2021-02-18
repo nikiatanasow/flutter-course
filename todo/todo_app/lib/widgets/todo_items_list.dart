@@ -8,6 +8,7 @@ class TodoItemsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoBlocState>(
+      buildWhen: (previous, current) => current is TodoItemsUpdatedState,
       builder: (context, state) {
         List<TodoItem> items = List<TodoItem>();
         if (state is TodoItemsUpdatedState) {
@@ -28,12 +29,14 @@ class TodoItemsList extends StatelessWidget {
                       ),
                     );
 
-                    // Call edit event
+                    BlocProvider.of<TodoBloc>(context)
+                        .add(BeginAddOrEditEvent(item: todoItem));
                   },
                   child: Dismissible(
                     key: UniqueKey(),
                     onDismissed: (direction) {
-                      // Call dismiss event
+                      BlocProvider.of<TodoBloc>(context)
+                          .add(DismissTodoItemEvent(item: todoItem));
                       final snackBar = SnackBar(
                         content: Text(
                           'Item ${todoItem.title} has been deleted!',
@@ -41,7 +44,9 @@ class TodoItemsList extends StatelessWidget {
                         action: SnackBarAction(
                           label: 'Undo',
                           onPressed: () {
-                            // Call undo event
+                            BlocProvider.of<TodoBloc>(context).add(
+                                UndoDismissTodoItemEvent(
+                                    item: todoItem, index: index));
                           },
                         ),
                       );
@@ -53,7 +58,12 @@ class TodoItemsList extends StatelessWidget {
                       subtitle: Text(todoItem.details),
                       leading: Checkbox(
                         onChanged: (value) {
-                          // Call mark completed event
+                          BlocProvider.of<TodoBloc>(context).add(
+                            MarkItemCompleted(
+                                item: todoItem,
+                                isCompleted: value,
+                                index: index),
+                          );
                         },
                         value: todoItem.isCompleted ?? false,
                       ),

@@ -30,10 +30,15 @@ class TodoBloc extends Bloc<TodoBlocEvent, TodoBlocState> {
       yield TodoItemsUpdatedState(items: repository.provider.items);
     }
 
+    if (event is BeginAddOrEditEvent) {
+      yield TodoItemEditState(item: event.item);
+    }
+
     if (event is EditTodoItemEvent) {
       repository.provider.updateItem(event.item, event.oldItem);
 
       yield TodoItemsUpdatedState(items: repository.provider.items);
+      yield TodoItemEditState(item: event.item);
     }
 
     if (event is DismissTodoItemEvent) {

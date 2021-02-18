@@ -9,8 +9,8 @@ class TodoProvider {
     _items = List<TodoItem>();
   }
 
-  UnmodifiableListView<TodoItem> get items {
-    return UnmodifiableListView(_items);
+  List<TodoItem> get items {
+    return List.unmodifiable(_items);
   }
 
   void addItem({TodoItem item, int index = -1}) {
@@ -33,5 +33,9 @@ class TodoProvider {
     final realIndex = _items.indexOf(oldItem);
     _items.removeAt(realIndex);
     _items.insert(realIndex, item);
+  }
+
+  void update(List<TodoItem> items) {
+    _items = List<TodoItem>()..addAll(items);
   }
 }

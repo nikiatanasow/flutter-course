@@ -41,8 +41,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  // Call deleted event
                   Navigator.of(context).pop();
+                  BlocProvider.of<TodoBloc>(context)
+                      .add(DeleteTodoItemEvent(item: item));
                 },
               ),
             ],
@@ -63,7 +64,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   builder: (context) => AddEditScreen(),
                 ),
               );
-              // call edit event
             },
           ),
         );

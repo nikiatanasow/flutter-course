@@ -54,13 +54,23 @@ class _MyHomePageState extends State<MyHomePage> {
             onSelected: (type) {
               switch (type) {
                 case FilterPopupItem.all:
-                  // call event filter all
+                  BlocProvider.of<TodoBloc>(context).add(
+                    FilterEvent(
+                      status: FilterPopupItem.all,
+                    ),
+                  );
                   break;
                 case FilterPopupItem.active:
-                  // call event filter active
+                  BlocProvider.of<TodoBloc>(context).add(
+                    FilterEvent(
+                      status: FilterPopupItem.active,
+                    ),
+                  );
                   break;
                 case FilterPopupItem.completed:
-                  // call event filter completed
+                  BlocProvider.of<TodoBloc>(context).add(FilterEvent(
+                    status: FilterPopupItem.completed,
+                  ));
                   break;
               }
             },
@@ -87,7 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Icon(Icons.more_horiz),
             ),
             onSelected: (value) {
-              // call mark event
+              if (value == OptionsPopupItem.markAllActive) {
+                BlocProvider.of<TodoBloc>(context)
+                    .add(MarkAllItemsActiveEvent());
+              } else {
+                BlocProvider.of<TodoBloc>(context)
+                    .add(MarkAllItemsCompletedEvent());
+              }
             },
             itemBuilder: (context) {
               return <PopupMenuEntry>[
@@ -106,12 +122,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: _currentSelectedIndex == 0 ? TodoItemsList() : Stats(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.of(context).push(
+        onPressed: () {
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AddEditScreen(),
             ),
           );
+
+          BlocProvider.of<TodoBloc>(context)
+              .add(BeginAddOrEditEvent(item: null));
         },
         child: Icon(Icons.add),
       ),

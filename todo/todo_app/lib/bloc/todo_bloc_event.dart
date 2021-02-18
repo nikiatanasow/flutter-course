@@ -73,12 +73,6 @@ class FilterEvent extends TodoBlocEvent {
   List<Object> get props => [this.status];
 }
 
-class ShowAllItemsEvent extends FilterEvent {}
-
-class ShowActiveItemsEvent extends FilterEvent {}
-
-class ShowCompletedItemsEvent extends FilterEvent {}
-
 class MarkAllItemsCompletedEvent extends TodoBlocEvent {
   @override
   List<Object> get props => [];
@@ -87,4 +81,13 @@ class MarkAllItemsCompletedEvent extends TodoBlocEvent {
 class MarkAllItemsActiveEvent extends TodoBlocEvent {
   @override
   List<Object> get props => [];
+}
+
+class BeginAddOrEditEvent extends TodoBlocEvent {
+  final TodoItem item;
+
+  BeginAddOrEditEvent({@required this.item});
+
+  @override
+  List<Object> get props => [this.item];
 }

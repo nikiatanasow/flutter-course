@@ -58,8 +58,13 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     isCompleted: item?.isCompleted,
                   );
 
-                  BlocProvider.of<TodoBloc>(context)
-                      .add(AddTodoItemEvent(item: todoItem));
+                  if (item == null) {
+                    BlocProvider.of<TodoBloc>(context)
+                        .add(AddTodoItemEvent(item: todoItem));
+                  } else {
+                    BlocProvider.of<TodoBloc>(context)
+                        .add(EditTodoItemEvent(item: todoItem, oldItem: item));
+                  }
 
                   Navigator.of(context).pop(todoItem);
                 },

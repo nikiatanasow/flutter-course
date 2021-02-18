@@ -34,10 +34,18 @@ class TodoRepository {
   }
 
   List<TodoItem> mark(bool completed) {
+    List<TodoItem> items;
     if (completed) {
-      return provider.items.map((e) => e.copy(isCompleted: true)).toList();
+      items = provider.items.map((e) => e.copy(isCompleted: true)).toList();
+    } else {
+      items = provider.items.map((e) => e.copy(isCompleted: false)).toList();
     }
-    return provider.items.map((e) => e.copy(isCompleted: false)).toList();
+
+    provider.update(items);
+
+    items = filter(currentFilterStatus);
+
+    return items;
   }
 
   void dismiss(TodoItem item) {
