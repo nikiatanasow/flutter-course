@@ -10,11 +10,12 @@ Tracking progress of the flutter course
 - [x] [Theme 5 - Build simple ToDo application: **Part 3**](https://drive.google.com/file/d/1cTw7gAX927jCMVZ57m0MmQGWDJkel9JZ/view?usp=sharing)
 - [x] [Theme 6 - Rewrite the ToDo business logic with BloC: **Part 1**](https://viskosoft-my.sharepoint.com/:v:/g/personal/admin_viskosoft_onmicrosoft_com/EVH_rftDouhHvAwfQEWlj1IBrNGNTr6DC5yk1Aw1FjJeOw?e=UaXjNw)
 - [x] [Theme 7 - Rewrite the ToDo business logic with BloC: **Part 2**](https://viskosoft-my.sharepoint.com/:v:/g/personal/admin_viskosoft_onmicrosoft_com/EeVjOu4Ago5DgPDrxRMW4O4BJRhCQrABaQi1kXomXvuIyQ?e=G1c8oI)
-- [ ] Theme 8 - Connect the ToDo application to a service
-- [ ] Theme 9 - Animations - implicit and explicit. Add animations into the ToDo application
-- [ ] Theme 10 - How to write platform specific code in Android and Objective-c. When it is needed?
-- [ ] Theme 11 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
-- [ ] Theme 12 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
+- [ ] [Theme 8 - Rewrite the ToDo business logic with BloC: **Part 3**](https://drive.google.com/file/d/1BlVBSLnjzl8dJBjYZP-hvomz9XFl8FfI/view?usp=sharing)
+- [ ] Theme 9 - Connect the ToDo application to a service
+- [ ] Theme 10 - Animations - implicit and explicit. Add animations into the ToDo application
+- [ ] Theme 11 - How to write platform specific code in Android and Objective-c. When it is needed?
+- [ ] Theme 12 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
+- [ ] Theme 13 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
 
 ## ToDo Application Design
 ![ToDo](https://bloclibrary.dev/assets/gifs/flutter_todos.gif)
@@ -46,3 +47,8 @@ Improve the logic of the two buttons that are part of the AppBar on the main pag
 Create a counter app with BLoC on your own.
 #### Theme 7
 Finish the BLoC migration by invoking the events.
+#### Theme 8
+Refactor the application:
+- prevent BlocConsumers from being invoked if not needed.
+- try to separate the add/edit page.
+- overall code refactoring
