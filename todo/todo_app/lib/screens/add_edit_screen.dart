@@ -13,14 +13,6 @@ class _AddEditScreenState extends State<AddEditScreen> {
   TextEditingController _detailsController;
 
   @override
-  void initState() {
-    super.initState();
-
-    // _titleContoller = TextEditingController(text: widget.item?.title);
-    // _detailsController = TextEditingController(text: widget.item?.details);
-  }
-
-  @override
   void dispose() {
     _titleContoller.dispose();
     _detailsController.dispose();
