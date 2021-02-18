@@ -22,6 +22,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoBlocState>(
+      buildWhen: (prev, curr) => curr is TodoItemEditState,
       builder: (context, state) {
         TodoItem item;
         if (state is TodoItemEditState) {
