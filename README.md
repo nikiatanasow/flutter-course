@@ -12,11 +12,12 @@ Tracking progress of the flutter course
 - [x] [Theme 7 - Rewrite the ToDo business logic with BloC: **Part 2**](https://viskosoft-my.sharepoint.com/:v:/g/personal/admin_viskosoft_onmicrosoft_com/EeVjOu4Ago5DgPDrxRMW4O4BJRhCQrABaQi1kXomXvuIyQ?e=G1c8oI)
 - [x] [Theme 8 - Rewrite the ToDo business logic with BloC: **Part 3**](https://drive.google.com/file/d/1BlVBSLnjzl8dJBjYZP-hvomz9XFl8FfI/view?usp=sharing)
 - [x] [Theme 9 - Web services intro](presentations/web-services-intro.md)
-- [ ] Theme 10 - Connect the ToDo application to a service
-- [ ] Theme 11 - Animations - implicit and explicit. Add animations into the ToDo application
-- [ ] Theme 12 - How to write platform specific code in Android and Objective-c. When it is needed?
-- [ ] Theme 13 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
-- [ ] Theme 14 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
+- [x] Theme 10 - Connect the ToDo application to a service: **Part 1**
+- [ ] Theme 11 - Connect the ToDo application to a service: **Part 2**
+- [ ] Theme 12 - Animations - implicit and explicit. Add animations into the ToDo application
+- [ ] Theme 13 - How to write platform specific code in Android and Objective-c. When it is needed?
+- [ ] Theme 14 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
+- [ ] Theme 15 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
 
 ## ToDo Application Design
 ![ToDo](https://bloclibrary.dev/assets/gifs/flutter_todos.gif)

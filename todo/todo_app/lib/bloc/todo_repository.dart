@@ -6,8 +6,8 @@ class TodoRepository {
   TodoProvider provider;
   FilterPopupItem currentFilterStatus;
 
-  TodoRepository() {
-    provider = TodoProvider();
+  TodoRepository(Function(List<TodoItem>) loadItems) {
+    provider = TodoProvider((items) => loadItems(items));
   }
 
   List<TodoItem> filter(FilterPopupItem filter) {

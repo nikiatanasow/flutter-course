@@ -12,7 +12,11 @@ part 'todo_bloc_state.dart';
 
 class TodoBloc extends Bloc<TodoBlocEvent, TodoBlocState> {
   TodoRepository repository;
-  TodoBloc({@required this.repository}) : super(TodoBlocInitial());
+  // TodoBloc({@required this.repository}) : super(TodoBlocInitial());
+  TodoBloc() : super(TodoBlocInitial()) {
+    repository = TodoRepository(
+        (items) => {this.emit(TodoItemsUpdatedState(items: items))});
+  }
 
   @override
   Stream<TodoBlocState> mapEventToState(

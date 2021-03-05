@@ -2,7 +2,7 @@ class TodoItem {
   final String title;
   final String details;
   final bool isCompleted;
-  final int id;
+  final String id;
 
   const TodoItem({this.title, this.details, this.isCompleted, this.id});
 
@@ -11,5 +11,14 @@ class TodoItem {
         title: title ?? this.title,
         details: details ?? this.details,
         isCompleted: isCompleted ?? this.isCompleted);
+  }
+
+  factory TodoItem.fromJson(Map<String, dynamic> json) {
+    return TodoItem(
+      id: json['_id'],
+      title: json['title'],
+      details: json['description'],
+      // isCompleted: json['isCompleted'],
+    );
   }
 }

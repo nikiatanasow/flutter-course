@@ -4,6 +4,7 @@ import 'package:todo_app/bloc/todo_bloc.dart';
 import 'package:todo_app/bloc/todo_repository.dart';
 import 'package:todo_app/models/filter_popup_item.dart';
 import 'package:todo_app/models/options_popup_item.dart';
+import 'package:todo_app/models/todo_item.dart';
 import 'package:todo_app/screens/add_edit_screen.dart';
 import 'package:todo_app/widgets/stats.dart';
 import 'package:todo_app/widgets/todo_items_list.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TodoBloc(repository: TodoRepository()),
+      create: (_) => TodoBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Todos',
