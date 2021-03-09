@@ -12,7 +12,7 @@ Tracking progress of the flutter course
 - [x] [Theme 7 - Rewrite the ToDo business logic with BloC: **Part 2**](https://viskosoft-my.sharepoint.com/:v:/g/personal/admin_viskosoft_onmicrosoft_com/EeVjOu4Ago5DgPDrxRMW4O4BJRhCQrABaQi1kXomXvuIyQ?e=G1c8oI)
 - [x] [Theme 8 - Rewrite the ToDo business logic with BloC: **Part 3**](https://drive.google.com/file/d/1BlVBSLnjzl8dJBjYZP-hvomz9XFl8FfI/view?usp=sharing)
 - [x] [Theme 9 - Web services intro](presentations/web-services-intro.md) + [video](https://drive.google.com/file/d/1FjzauiIxTcpSFvR22t88_mVS6mv1m37D/view?usp=sharing)
-- [x] Theme 10 - Connect the ToDo application to a service: **Part 1**
+- [x] [Theme 10 - Connect the ToDo application to a service: **Part 1**] (https://viskosoft-my.sharepoint.com/:v:/g/personal/viktoriaggr_outlook_com_ext__viskosoft_onmicrosoft_com/Edavh2FilI5Dtw-wuWCrFegBmkt-KuvHGm65Po61Z68zEw?e=HfRe4m)
 - [ ] Theme 11 - Connect the ToDo application to a service: **Part 2**
 - [ ] Theme 12 - Animations - implicit and explicit. Add animations into the ToDo application
 - [ ] Theme 13 - How to write platform specific code in Android and Objective-c. When it is needed?
