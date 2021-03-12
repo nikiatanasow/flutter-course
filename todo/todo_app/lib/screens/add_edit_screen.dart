@@ -46,10 +46,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   final details = _detailsController.text;
 
                   final todoItem = TodoItem(
-                    title: title,
-                    details: details,
-                    isCompleted: item?.isCompleted,
-                  );
+                      title: title,
+                      details: details,
+                      isCompleted: item?.isCompleted,
+                      id: item?.id);
 
                   if (item == null) {
                     BlocProvider.of<TodoBloc>(context)

@@ -10,7 +10,8 @@ class TodoItem {
     return TodoItem(
         title: title ?? this.title,
         details: details ?? this.details,
-        isCompleted: isCompleted ?? this.isCompleted);
+        isCompleted: isCompleted ?? this.isCompleted,
+        id: this.id);
   }
 
   factory TodoItem.fromJson(Map<String, dynamic> json) {
@@ -18,7 +19,10 @@ class TodoItem {
       id: json['_id'],
       title: json['title'],
       details: json['description'],
-      // isCompleted: json['isCompleted'],
+      isCompleted: json['isCompleted'],
     );
   }
+
+  Map<String, dynamic> toJson() =>
+      {'title': title, 'description': details, 'isCompleted': isCompleted};
 }

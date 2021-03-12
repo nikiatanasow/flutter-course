@@ -23,15 +23,15 @@ class TodoBloc extends Bloc<TodoBlocEvent, TodoBlocState> {
     TodoBlocEvent event,
   ) async* {
     if (event is AddTodoItemEvent) {
-      repository.provider.addItem(item: event.item);
-
-      yield TodoItemsUpdatedState(items: repository.provider.items);
+      await repository.provider.addItem(item: event.item);
+      final items = await repository.provider.items;
+      yield TodoItemsUpdatedState(items: items);
     }
 
     if (event is DeleteTodoItemEvent) {
-      repository.provider.removeItem(item: event.item);
+      await repository.provider.removeItem(item: event.item);
 
-      yield TodoItemsUpdatedState(items: repository.provider.items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
     }
 
     if (event is BeginAddOrEditEvent) {
@@ -39,28 +39,29 @@ class TodoBloc extends Bloc<TodoBlocEvent, TodoBlocState> {
     }
 
     if (event is EditTodoItemEvent) {
-      repository.provider.updateItem(event.item, event.oldItem);
+      await repository.provider.updateItem(event.item, event.oldItem);
 
-      yield TodoItemsUpdatedState(items: repository.provider.items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
       yield TodoItemEditState(item: event.item);
     }
 
     if (event is DismissTodoItemEvent) {
-      repository.dismiss(event.item);
+      await repository.dismiss(event.item);
 
-      yield TodoItemsUpdatedState(items: repository.provider.items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
     }
 
     if (event is UndoDismissTodoItemEvent) {
       repository.undoDismiss(event.item, event.index);
 
-      yield TodoItemsUpdatedState(items: repository.provider.items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
     }
 
     if (event is MarkItemCompleted) {
-      repository.markItemCompleted(event.item, event.isCompleted, event.index);
+      await repository.markItemCompleted(
+          event.item, event.isCompleted, event.index);
 
-      yield TodoItemsUpdatedState(items: repository.provider.items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
     }
 
     if (event is FilterEvent) {
@@ -70,15 +71,15 @@ class TodoBloc extends Bloc<TodoBlocEvent, TodoBlocState> {
     }
 
     if (event is MarkAllItemsCompletedEvent) {
-      final items = repository.mark(true);
+      await repository.mark(true);
 
-      yield TodoItemsUpdatedState(items: items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
     }
 
     if (event is MarkAllItemsActiveEvent) {
-      final items = repository.mark(false);
+      await repository.mark(false);
 
-      yield TodoItemsUpdatedState(items: items);
+      yield TodoItemsUpdatedState(items: await repository.provider.items);
     }
   }
 }
