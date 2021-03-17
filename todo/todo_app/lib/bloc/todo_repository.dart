@@ -10,45 +10,14 @@ class TodoRepository {
     provider = TodoProvider((items) => loadItems(items));
   }
 
-  List<TodoItem> filter(FilterPopupItem filter) {
+  Future<List<TodoItem>> filter(FilterPopupItem filter) async {
     currentFilterStatus = filter;
 
-    if (filter == FilterPopupItem.all) {
-      // return provider.items;
-      return [];
-    }
-
-    // if (filter == FilterPopupItem.active) {
-    //   return provider.items
-    //       .where((element) =>
-    //           element.isCompleted == false || element.isCompleted == null)
-    //       .toList();
-    // }
-
-    // if (filter == FilterPopupItem.completed) {
-    //   return provider.items
-    //       .where((element) => element.isCompleted == true)
-    //       .toList();
-    // }
-
-    return null;
+    return provider.fetchItems(filter: filter);
   }
 
   Future mark(bool completed) async {
-    // List<TodoItem> items;
-    // if (completed) {
-    //   items = provider.items.map((e) => e.copy(isCompleted: true)).toList();
-    // } else {
-    //   items = provider.items.map((e) => e.copy(isCompleted: false)).toList();
-    // }
-
-    // provider.update(items);
-
-    // items = filter(currentFilterStatus);
-
-    // return items;
-
-    final items = await provider.items;
+    final items = await provider.fetchItems();
 
     await Future.wait(items.map((item) {
       return this.markItemCompleted(item, completed, 0);
@@ -65,9 +34,7 @@ class TodoRepository {
 
   Future markItemCompleted(TodoItem item, bool isCompleted, int index) async {
     final changedTodoItem = item.copy(isCompleted: isCompleted);
-    // await provider.removeItem(item: item, index: index);
-    // provider.addItem(item: changedTodoItem, index: index);
 
-    await provider.updateItem(changedTodoItem, null);
+    return provider.updateItem(changedTodoItem, null);
   }
 }

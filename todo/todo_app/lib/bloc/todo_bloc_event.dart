@@ -91,3 +91,9 @@ class BeginAddOrEditEvent extends TodoBlocEvent {
   @override
   List<Object> get props => [this.item];
 }
+
+
+class PullToRefreshEvent extends TodoBlocEvent {
+   @override
+  List<Object> get props => [];
+}

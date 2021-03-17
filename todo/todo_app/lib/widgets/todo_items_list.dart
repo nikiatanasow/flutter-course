@@ -15,64 +15,72 @@ class TodoItemsList extends StatelessWidget {
           items.addAll(state.items);
         }
 
-        return ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final TodoItem todoItem = items[index];
-            return Stack(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DetailsScreen(),
-                      ),
-                    );
+        // TODO: Nasko to fix
+         Future<void> _getData() async {
+            BlocProvider.of<TodoBloc>(context).add(PullToRefreshEvent());
+          }
 
-                    BlocProvider.of<TodoBloc>(context)
-                        .add(BeginAddOrEditEvent(item: todoItem));
-                  },
-                  child: Dismissible(
-                    key: UniqueKey(),
-                    onDismissed: (direction) {
-                      BlocProvider.of<TodoBloc>(context)
-                          .add(DismissTodoItemEvent(item: todoItem));
-                      final snackBar = SnackBar(
-                        content: Text(
-                          'Item ${todoItem.title} has been deleted!',
-                        ),
-                        action: SnackBarAction(
-                          label: 'Undo',
-                          onPressed: () {
-                            BlocProvider.of<TodoBloc>(context).add(
-                                UndoDismissTodoItemEvent(
-                                    item: todoItem, index: index));
-                          },
+        return RefreshIndicator(
+          onRefresh: _getData,
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final TodoItem todoItem = items[index];
+              return Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailsScreen(),
                         ),
                       );
 
-                      Scaffold.of(context).showSnackBar(snackBar);
+                      BlocProvider.of<TodoBloc>(context)
+                          .add(BeginAddOrEditEvent(item: todoItem));
                     },
-                    child: ListTile(
-                      title: Text(todoItem.title),
-                      subtitle: Text(todoItem.details),
-                      leading: Checkbox(
-                        onChanged: (value) {
-                          BlocProvider.of<TodoBloc>(context).add(
-                            MarkItemCompleted(
-                                item: todoItem,
-                                isCompleted: value,
-                                index: index),
-                          );
-                        },
-                        value: todoItem.isCompleted ?? false,
+                    child: Dismissible(
+                      key: UniqueKey(),
+                      onDismissed: (direction) {
+                        BlocProvider.of<TodoBloc>(context)
+                            .add(DismissTodoItemEvent(item: todoItem));
+                        final snackBar = SnackBar(
+                          content: Text(
+                            'Item ${todoItem.title} has been deleted!',
+                          ),
+                          action: SnackBarAction(
+                            label: 'Undo',
+                            onPressed: () {
+                              BlocProvider.of<TodoBloc>(context).add(
+                                  UndoDismissTodoItemEvent(
+                                      item: todoItem, index: index));
+                            },
+                          ),
+                        );
+
+                        Scaffold.of(context).showSnackBar(snackBar);
+                      },
+                      child: ListTile(
+                        title: Text(todoItem.title),
+                        subtitle: Text(todoItem.details),
+                        leading: Checkbox(
+                          onChanged: (value) {
+                            BlocProvider.of<TodoBloc>(context).add(
+                              MarkItemCompleted(
+                                  item: todoItem,
+                                  isCompleted: value,
+                                  index: index),
+                            );
+                          },
+                          value: todoItem.isCompleted ?? false,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         );
       },
     );
