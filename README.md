@@ -14,11 +14,12 @@ Tracking progress of the flutter course
 - [x] [Theme 9 - Web services intro](presentations/web-services-intro.md) + [video](https://drive.google.com/file/d/1FjzauiIxTcpSFvR22t88_mVS6mv1m37D/view?usp=sharing)
 - [x] [Theme 10 - Connect the ToDo application to a service: **Part 1**](https://viskosoft-my.sharepoint.com/:v:/g/personal/viktoriaggr_outlook_com_ext__viskosoft_onmicrosoft_com/Edavh2FilI5Dtw-wuWCrFegBmkt-KuvHGm65Po61Z68zEw?e=HfRe4m)
 - [x] [Theme 11 - Connect the ToDo application to a service: **Part 2**](https://drive.google.com/file/d/1j7UCpjOgrBEbHGaDav6FUV4fcA_SvsB8/view?usp=sharing)
-- [ ] Theme 12 - Connect the ToDo application to a service: **Part 3**
-- [ ] Theme 13 - Animations - implicit and explicit. Add animations into the ToDo application
-- [ ] Theme 14 - How to write platform specific code in Android and Objective-c. When it is needed?
-- [ ] Theme 15 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
-- [ ] Theme 16 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
+- [x] [Theme 12 - Connect the ToDo application to a service: **Part 3**](https://drive.google.com/file/d/1FjzauiIxTcpSFvR22t88_mVS6mv1m37D/view?usp=sharing)
+- [ ] Theme 13 - Refactoring
+- [ ] Theme 14 - Animations - implicit and explicit. Add animations into the ToDo application
+- [ ] Theme 15 - How to write platform specific code in Android and Objective-c. When it is needed?
+- [ ] Theme 16 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
+- [ ] Theme 17 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
 
 ## ToDo Application Design
 ![ToDo](https://bloclibrary.dev/assets/gifs/flutter_todos.gif)
