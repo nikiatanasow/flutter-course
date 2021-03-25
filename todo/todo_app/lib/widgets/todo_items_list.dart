@@ -33,9 +33,8 @@ class TodoItemsList extends StatelessWidget {
                             ),
                           );
 
-                          final TodoBloc bloc =
-                              BlocProvider.of<TodoBloc>(context);
-                          bloc.emit(bloc.state.copyWith(currentItem: todoItem));
+                          BlocProvider.of<TodoBloc>(context)
+                              .beginEdit(todoItem);
                         },
                         child: Dismissible(
                           key: UniqueKey(),

@@ -25,6 +25,14 @@ class TodoBloc extends Cubit<TodoBlocState> {
     );
   }
 
+  void beginAdd() {
+    emit(state.copyWith(currentItem: null));
+  }
+
+  void beginEdit(TodoItem item) {
+    emit(state.copyWith(currentItem: item));
+  }
+
   Future<void> addItem(TodoItem item) async {
     await _executeFunction(function: repository.provider.addItem(item: item));
   }

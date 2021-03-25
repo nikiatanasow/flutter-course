@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/bloc/todo_bloc.dart';
-import 'package:todo_app/bloc/todo_repository.dart';
 import 'package:todo_app/models/filter_popup_item.dart';
 import 'package:todo_app/models/options_popup_item.dart';
-import 'package:todo_app/models/todo_item.dart';
 import 'package:todo_app/screens/add_edit_screen.dart';
 import 'package:todo_app/widgets/stats.dart';
 import 'package:todo_app/widgets/todo_items_list.dart';
@@ -116,9 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           );
 
-          final bloc = BlocProvider.of<TodoBloc>(context);
-          bloc.emit(TodoBlocState(
-              items: bloc.state.items, currentItem: null, isLoading: false));
+          BlocProvider.of<TodoBloc>(context).beginAdd();
         },
         child: Icon(Icons.add),
       ),
