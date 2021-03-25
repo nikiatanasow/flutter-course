@@ -55,23 +55,16 @@ class _MyHomePageState extends State<MyHomePage> {
             onSelected: (type) {
               switch (type) {
                 case FilterPopupItem.all:
-                  BlocProvider.of<TodoBloc>(context).add(
-                    FilterEvent(
-                      status: FilterPopupItem.all,
-                    ),
-                  );
+                  BlocProvider.of<TodoBloc>(context)
+                      .filter(FilterPopupItem.all);
                   break;
                 case FilterPopupItem.active:
-                  BlocProvider.of<TodoBloc>(context).add(
-                    FilterEvent(
-                      status: FilterPopupItem.active,
-                    ),
-                  );
+                  BlocProvider.of<TodoBloc>(context)
+                      .filter(FilterPopupItem.active);
                   break;
                 case FilterPopupItem.completed:
-                  BlocProvider.of<TodoBloc>(context).add(FilterEvent(
-                    status: FilterPopupItem.completed,
-                  ));
+                  BlocProvider.of<TodoBloc>(context)
+                      .filter(FilterPopupItem.completed);
                   break;
               }
             },
@@ -97,15 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Icon(Icons.more_horiz),
             ),
-            onSelected: (value) {
-              if (value == OptionsPopupItem.markAllActive) {
-                BlocProvider.of<TodoBloc>(context)
-                    .add(MarkAllItemsActiveEvent());
-              } else {
-                BlocProvider.of<TodoBloc>(context)
-                    .add(MarkAllItemsCompletedEvent());
-              }
-            },
+            onSelected: (value) => BlocProvider.of<TodoBloc>(context)
+                .markItems(value != OptionsPopupItem.markAllActive),
             itemBuilder: (context) {
               return <PopupMenuEntry>[
                 PopupMenuItem<OptionsPopupItem>(
@@ -130,8 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           );
 
-          BlocProvider.of<TodoBloc>(context)
-              .add(BeginAddOrEditEvent(item: null));
+          final bloc = BlocProvider.of<TodoBloc>(context);
+          bloc.emit(TodoBlocState(
+              items: bloc.state.items, currentItem: null, isLoading: false));
         },
         child: Icon(Icons.add),
       ),

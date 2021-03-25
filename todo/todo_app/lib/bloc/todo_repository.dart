@@ -20,7 +20,7 @@ class TodoRepository {
     final items = await provider.fetchItems();
 
     await Future.wait(items.map((item) {
-      return this.markItemCompleted(item, completed, 0);
+      return this.markItemCompleted(item, completed);
     }));
   }
 
@@ -28,13 +28,13 @@ class TodoRepository {
     await provider.removeItem(item: item);
   }
 
-  void undoDismiss(TodoItem item, int index) {
-    provider.addItem(item: item, index: index);
+  Future undoDismiss(TodoItem item) async {
+    await provider.addItem(item: item);
   }
 
-  Future markItemCompleted(TodoItem item, bool isCompleted, int index) async {
+  Future markItemCompleted(TodoItem item, bool isCompleted) async {
     final changedTodoItem = item.copy(isCompleted: isCompleted);
 
-    return provider.updateItem(changedTodoItem, null);
+    return provider.updateItem(changedTodoItem);
   }
 }

@@ -7,10 +7,7 @@ class Stats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoBlocState>(builder: (context, state) {
-      List<TodoItem> items = List<TodoItem>();
-      if (state is TodoItemsUpdatedState) {
-        items.addAll(state.items);
-      }
+      final List<TodoItem> items = []..addAll(state.items);
       return Container(
         width: double.infinity,
         child: Column(

@@ -22,12 +22,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TodoBloc, TodoBlocState>(
-      buildWhen: (prev, curr) => curr is TodoItemEditState,
+      buildWhen: (prev, curr) => curr.currentItem != prev.currentItem,
       builder: (context, state) {
-        TodoItem item;
-        if (state is TodoItemEditState) {
-          item = state.item;
-        }
+        final TodoItem item = state.currentItem;
 
         _titleContoller = TextEditingController(text: item?.title);
         _detailsController = TextEditingController(text: item?.details);
@@ -52,11 +49,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
                       id: item?.id);
 
                   if (item == null) {
-                    BlocProvider.of<TodoBloc>(context)
-                        .add(AddTodoItemEvent(item: todoItem));
+                    BlocProvider.of<TodoBloc>(context).addItem(todoItem);
                   } else {
-                    BlocProvider.of<TodoBloc>(context)
-                        .add(EditTodoItemEvent(item: todoItem, oldItem: item));
+                    BlocProvider.of<TodoBloc>(context).editItem(todoItem);
                   }
 
                   Navigator.of(context).pop(todoItem);
