@@ -16,7 +16,7 @@ Tracking progress of the flutter course
 - [x] [Theme 11 - Connect the ToDo application to a service: **Part 2**](https://drive.google.com/file/d/1j7UCpjOgrBEbHGaDav6FUV4fcA_SvsB8/view?usp=sharing)
 - [x] [Theme 12 - Connect the ToDo application to a service: **Part 3**](https://drive.google.com/file/d/1FjzauiIxTcpSFvR22t88_mVS6mv1m37D/view?usp=sharing)
 - [x] [Theme 13 - Refactoring](https://drive.google.com/file/d/1Xzu91Tnl0AbgQv32uFq-1tEn8s6A1cj1/view?usp=sharing)
-- [ ] Theme 14 - Animations - implicit and explicit. Add animations into the ToDo application
+- [x] [Theme 14 - Animations - implicit and explicit. Add animations into the ToDo application](https://drive.google.com/file/d/1Bn7vHXku8J1oKTjOamjHmUbiSyUVHkN7/view?usp=sharing)
 - [ ] Theme 15 - How to write platform specific code in Android and Objective-c. When it is needed?
 - [ ] Theme 16 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native
 - [ ] Theme 17 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
