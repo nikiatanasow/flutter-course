@@ -19,7 +19,7 @@ Tracking progress of the flutter course
 - [x] [Theme 14 - Animations - implicit and explicit. Add animations into the ToDo application](https://drive.google.com/file/d/1Bn7vHXku8J1oKTjOamjHmUbiSyUVHkN7/view?usp=sharing)
 - [x] [Theme 15 - How to write platform specific code in Android and Objective-c. When it is needed?](https://drive.google.com/file/d/1mg04BUYAm2DZrij-0ylSCoxzIFsORGWI/view?usp=sharing)
 - [x] [Theme 16 - Flutter Architecture: How Flutter works under the hood and makes it different than Xamarin and React Native](https://drive.google.com/file/d/1M9c-xN1J8bTXjT7g3TyEnFcjQscIq9uM/view?usp=sharing)
-- [ ] Theme 17 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout
+- [x] [Theme 17 - Flutter Architecture: Part 2 - CustomPaint, CustomMultiChildLayout, CustomSingleChildLayout](https://drive.google.com/file/d/1nsgvpr0Dga8_102As0Ry1UTNHdhNe5Pd/view?usp=sharing)
 
 ## ToDo Application Design
 ![ToDo](https://bloclibrary.dev/assets/gifs/flutter_todos.gif)
